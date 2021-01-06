@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace 绑定一个对应的Dao/Mapper接口,相当于以前的实现了...接口-->
+<mapper namespace="com.lgq.dao.UserMapper">
+
+    <!--select表示这是一个查询语句,id是接口中方法的名字，相当于以前的重写了...方法-->
+    <select id="getUserList" resultType="com.lgq.pojo.User">
+        <!--sql语句-->
+        select * from mybatis.user
+    </select>
+
+    <!--结果集映射-->
+    <resultMap id="UserMap" type="com.lgq.pojo.User">
+        <!--column：数据库中的字段  property：实体类的属性-->
+<!--        <result column="id" property="id"/>-->
+<!--        <result column="name" property="name"/>-->
+        <result column="pwd" property="password"/>
+    </resultMap>
+    <select id="getUserById" resultMap="UserMap" parameterType="int">
+        select * from mybatis.user where id = #{id}
+    </select>
+
+
+    <!--分页-->
+    <select id="getUserByLimit" parameterType="map" resultType="com.lgq.pojo.User">
+        select * from mybatis.user limit #{startIndex},#{pageSize}
+    </select>
+
+
+
+</mapper>
